@@ -1708,6 +1708,30 @@ class FlexPath(object):
             self.bezier((cta[-1], ctb[-1], points[0]), width, offset, False)
         return self
 
+    
+class FbmsPath(FlexPath):
+    def to_gds(self, outfile, multiplier):
+        if len(self.points) < 2:
+            return
+        if self.n != 1:
+            return
+        bytesStart = struct.pack(">4Hh2Hh2Hl",
+                                4,0x5800,
+                                6,0x0D02,self.layers[0],
+                                6,0x0E02,self.datatypes[0],
+                                8,0x0F03,int(round(self.widths[0, 0] * multiplier)))
+        outfile.write(bytesStart)
+            #todo array with zeros and curvature flags...
+        
+        points = numpy.round(self.points * multiplier)#.astype(">i4")
+        uvData = numpy.zeros(points.size*2+4, dtype=">i4")
+        uvData[8::4] = 1
+        uvData[5::4] = points[:][0]
+        uvData[6::4] = points[:][1]
+        outfile.write(struct.pack(">2H", 4 + 4 * uvData.size, 0x1003))
+        outfile.write(uvData.tobytes())
+        outfile.write(struct.pack(">2H", 4, 0x1100))
+
 
 class RobustPath(object):
     """
