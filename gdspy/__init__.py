@@ -34,7 +34,7 @@ from gdspy.library import (
 )
 from gdspy.curve import Curve
 from gdspy.label import Label
-from gdspy.path import FlexPath, RobustPath, FbmsPath
+from gdspy.path import FlexPath, RobustPath, FbmsPath, FbmsCircle
 from gdspy.polygon import (
     PolygonSet,
     Polygon,
