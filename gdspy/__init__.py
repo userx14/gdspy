@@ -34,7 +34,7 @@ from gdspy.library import (
 )
 from gdspy.curve import Curve
 from gdspy.label import Label
-from gdspy.path import FlexPath, RobustPath, FbmsPath, FbmsCircle
+from gdspy.path import FlexPath, RobustPath
 from gdspy.polygon import (
     PolygonSet,
     Polygon,
@@ -47,6 +47,7 @@ from gdspy.polygon import (
 )
 from gdspy.gdsiiformat import gdsii_hash, set_gdsii_timestamp
 from gdspy.operation import slice, offset, boolean, inside, copy
+from gdspy.raith import RaithArc, RaithEllipse, FbmsPath, FbmsCircle       #added to support raith gdsii elements
 
 try:
     from gdspy.viewer import LayoutViewer

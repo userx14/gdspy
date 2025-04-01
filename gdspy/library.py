@@ -48,6 +48,7 @@ import copy as libcopy
 from gdspy.polygon import PolygonSet, Polygon
 from gdspy.path import FlexPath, RobustPath
 from gdspy.label import Label
+from gdspy.raith import RaithEllipse, RaithArc, FbmsPath, FbmsCircle
 from gdspy.gdsiiformat import (
     _record_reader,
     _raw_record_reader,
@@ -308,7 +309,7 @@ class Cell(object):
         out : `Cell`
             This cell.
         """
-        if isinstance(element, PolygonSet):
+        if isinstance(element, PolygonSet) or isinstance(element, (RaithEllipse, RaithArc, FbmsCircle, FbmsPath)):
             self.polygons.append(element)
         elif isinstance(element, RobustPath) or isinstance(element, FlexPath):
             self.paths.append(element)
