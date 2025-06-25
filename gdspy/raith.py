@@ -1,5 +1,6 @@
 import struct
 import sys
+import numpy
 from gdspy.gdsiiformat import (
     _eight_byte_real,
 )
