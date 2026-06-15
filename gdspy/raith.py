@@ -55,16 +55,22 @@ class RaithArc():
     def __init__(self,center,radMajMin,startEndAngle, linewidth=None,number_of_points=20,angle=None,layer=0,datatype=0):
         if number_of_points>1024:
             raise ValueError("Does not support more than 1024 vertices")
+        
+        #the beam controller does not seem to be able to write structures with these angles, even though they are displayed and fractured correctely
+        if (startEndAngle[0] < 0.0) or (startEndAngle[0] > 360.0):
+            raise ValueError(f"Start angle is out of range, max range 0-360, is {startEndAngle[1]}. Use angle argument.")
+        if (startEndAngle[1] < 0.0) or (startEndAngle[1] > 360.0):
+            raise ValueError(f"End angle is out of range, max range 0-360, is {startEndAngle[1]}. Use angle argument.")
+        
+        
+        
         self.number_of_points = number_of_points
         self.layer            = layer
         self.datatype         = datatype
         self.center           = center
         self.radMajMin        = radMajMin #radius major minor axis, use array with same value twice for circle
         self.startEndAngle    = startEndAngle #angle from u axis, counterclockwise degree
-        if self.radMajMin[0] == self.radMajMin[1]:
-            self.angle            = None
-        else:
-            self.angle            = angle #only makes sense for ellipse
+        self.angle            = angle #only makes sense for ellipse
         self.linewidth        = linewidth #in um, when =0 then fill circle
     
     def to_gds(self, outfile, multiplier):
