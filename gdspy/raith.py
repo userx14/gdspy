@@ -7,12 +7,12 @@ from gdspy.gdsiiformat import (
 #ported from https://github.com/ahryciw/Raith_GDSII/blob/main/src/Raith_library.m
 
 class RaithEllipse():
-    def __init__(self,center,radMajMin,linewidth=None,number_of_points=20,angle=None,layer=0,datatype=0):
+    def __init__(self,center,radMajMin,linewidth=None,number_of_points=20,angle=None,layer=0,datatype=1000):
         if number_of_points>1024:
             raise ValueError("Does not support more than 1024 vertices")
         self.number_of_points = number_of_points
         self.layer            = layer
-        self.datatype         = datatype
+        self.datatype         = datatype  #datatype 0 will give mindose, not 100% like it does for area!
         self.center           = center
         self.radMajMin        = radMajMin #radius major minor axis, use array with same value twice for circle
         if self.radMajMin[0] == self.radMajMin[1]:
@@ -52,7 +52,7 @@ class RaithEllipse():
             
         
 class RaithArc():
-    def __init__(self,center,radMajMin,startEndAngle, linewidth=None,number_of_points=20,angle=None,layer=0,datatype=0):
+    def __init__(self,center,radMajMin,startEndAngle, linewidth=None,number_of_points=20,angle=None,layer=0,datatype=1000):
         if number_of_points>1024:
             raise ValueError("Does not support more than 1024 vertices")
         
@@ -131,7 +131,7 @@ class FbmsCircle():
             
 class FbmsPath():
     #segmentsCurvature in um, positive value = right curve
-    def __init__(self, points, width, segmentsCurveDistCenter=0, tolerance=0.01, precision=1e-3, max_points=199, layer=0, datatype=0):
+    def __init__(self, points, width, segmentsCurveDistCenter=0, tolerance=0.01, precision=1e-3, max_points=199, layer=0, datatype=1000):
         self._polygon_dict = None
         self.n = 1
         self.points = numpy.array(points)
